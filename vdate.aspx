@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="_Default" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="vdate.aspx.cs" Inherits="ADMIN_Default" MaintainScrollPositionOnPostback="true" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +57,7 @@
       </div>
       <nav class="site-navigation position-relative text-right bg-black text-md-right" role="navigation">
         <div class="container position-relative">
-           <div class="site-logo">
+          <div class="site-logo">
             <a href="index.aspx"><img src="images/logo.png" alt=""></a>
           </div>
 
@@ -78,7 +77,7 @@
             <li><a href="teams.aspx">Teams</a></li>
             <li><a href="fixtures.aspx">Matches</a></li>
             <li><a href="vdate.aspx">Venues </a></li>       
-            <a href="../index.aspx"> <button class="btn btn-primary" type="submit" id="b2">Logout</button></a>
+             <a href="../index.aspx"> <button class="btn btn-primary" type="submit" id="b2">Logout</button></a>
           </ul>
         </div>
       </nav>
@@ -88,9 +87,8 @@
       <div class="container">
         <div class="row align-items-center justify-content-start">
           <div class="col-md-6 text-center text-md-left" data-aos="fade-up" data-aos-delay="400">
-            <h1 class="bg-text-line">ADMIN CONTROLLER....</h1>
-            <p class="mt-4">#Assigning the value to the players<br/><br />#Creating the players,venues,teams,matches<br /><br />
-                #Updating points of players<br /> </p>
+            <h1 class="bg-text-line">Venues </h1>
+            <p class="mt-4">Enter the VENUES where matches are to be played.</p>
           </div>
         </div>
       </div>
@@ -101,19 +99,53 @@
       <div class="container">
         <div class="row align-items-first">
           <div class="col-md-7">
-          	<h1 align="align-items-center" class="bg-white" align="text-center" ></h1>
-            <form action="#" method="post" class="bg-white" align="text-center">
+          	<h1 align="align-items-center" class="bg-white" align="text-center" >Venue and Dates</h1>
+              <form id="form1" runat="server" class="bg-white" align="text-center">
               
-              
-                
-               
+              <div class="p-3 p-lg-5 border">
+                <div class="form-group row">
+                  <div class="col-md-12">
+                     <label for="c_fname" class="text-black">Enter Venues </label>
+                     <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control"></asp:TextBox>
+                    </div>
+                  
+                </div>
                 
                   
 
                 
+                <div class="form-group row">
+                  <div class="col-lg-12">
+                      <asp:Button runat="server" Text="Save" CssClass="btn btn-primary btn-lg btn-block" OnClick="Button1_Click" id="Button1" ></asp:Button>
+                   
+                  </div>
+                </div>
+                  <div>
+            
+           <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="id" DataSourceID="SqlDataSource1"  GridLines="None"  AllowPaging="True" PageSize="8"  >
+               
+                <Columns>
+                    <asp:BoundField DataField="venue" HeaderText="Venue" SortExpression="venue" />
+                    <asp:CommandField ShowEditButton="True" />
+                    <asp:CommandField ShowDeleteButton="True" />
+                </Columns>
                 
-           
-            </form>
+            </asp:GridView>
+
+                  </div>
+                  <div> 
+                      <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=dream11;Integrated Security=True" DeleteCommand="delvdate" DeleteCommandType="StoredProcedure" ProviderName="System.Data.SqlClient" SelectCommand="disvdate" SelectCommandType="StoredProcedure" UpdateCommand="updvdate" UpdateCommandType="StoredProcedure">
+                          <DeleteParameters>
+                              <asp:Parameter Name="id" Type="Int32" />
+                          </DeleteParameters>
+                          <UpdateParameters>
+                              <asp:Parameter Name="id" Type="Int32" />
+                              <asp:Parameter Name="venue" Type="String" />
+                          </UpdateParameters>
+                      </asp:SqlDataSource>
+        </div>
+              </div>
+              </form>
           </div>
             
           </div>
@@ -124,14 +156,13 @@
 
    
 
-    
     <footer class="site-footer border-top">
       <div class="container">
         <div class="row">
           <div class="col-lg-4">
             <div class="mb-5">
               <h3 class="footer-heading mb-4">About Sportz</h3>
-              <p>We are the websote that will help you to play along with the players you love and this is where the real game starts. You will have a great faceoff with other teams who just like you will have their own team to compete and this will be to get to the top and the best one will WIN.</p>
+              <p>We are the website that will help you to play along with the players you love and this is where the real game starts. You will have a great faceoff with other teams who just like you will have their own team to compete and this will be to get to the top and the best one will WIN.</p>
             </div>
 
             
@@ -191,7 +222,7 @@
                 <div class="input-group mb-3">
                   <input type="text" class="form-control border-secondary text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
                   <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" id="button-addon2">Send</button>
+                    <button class="btn btn-primary" type="button" id="buttonon2">Send</button>
                   </div>
                 </div>
               </form>
@@ -206,7 +237,7 @@
         </div>
      
     </footer>
-  
+ 
 
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -223,3 +254,4 @@
     
   </body>
 </html>
+

@@ -1,6 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="_Default" %>
-
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="points.aspx.cs" Inherits="ADMIN_point"  MaintainScrollPositionOnPostback="true"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -56,9 +54,10 @@
           </div>
         </div>
       </div>
+         
       <nav class="site-navigation position-relative text-right bg-black text-md-right" role="navigation">
         <div class="container position-relative">
-           <div class="site-logo">
+          <div class="site-logo">
             <a href="index.aspx"><img src="images/logo.png" alt=""></a>
           </div>
 
@@ -77,8 +76,8 @@
             <li><a href="players.aspx">Players</a></li>
             <li><a href="teams.aspx">Teams</a></li>
             <li><a href="fixtures.aspx">Matches</a></li>
-            <li><a href="vdate.aspx">Venues </a></li>       
-            <a href="../index.aspx"> <button class="btn btn-primary" type="submit" id="b2">Logout</button></a>
+            <li><a href="vdate.aspx">Venues</a></li>       
+           <a href="../index.aspx"> <button class="btn btn-primary" type="submit" id="b2">Logout</button></a>
           </ul>
         </div>
       </nav>
@@ -88,9 +87,8 @@
       <div class="container">
         <div class="row align-items-center justify-content-start">
           <div class="col-md-6 text-center text-md-left" data-aos="fade-up" data-aos-delay="400">
-            <h1 class="bg-text-line">ADMIN CONTROLLER....</h1>
-            <p class="mt-4">#Assigning the value to the players<br/><br />#Creating the players,venues,teams,matches<br /><br />
-                #Updating points of players<br /> </p>
+            <h1 class="bg-text-line">Points Updater</h1>
+            <p class="mt-4">Assigning the value to the player as per their play and experience. This will be the main point system.</p>
           </div>
         </div>
       </div>
@@ -101,23 +99,64 @@
       <div class="container">
         <div class="row align-items-first">
           <div class="col-md-7">
-          	<h1 align="align-items-center" class="bg-white" align="text-center" ></h1>
-            <form action="#" method="post" class="bg-white" align="text-center">
-              
-              
+          	<h1 align="align-items-center" class="bg-white" align="text-center" >Points Updater</h1>
+         <form action="" method="post" class="bg-white" align="text-center" runat="server">
+             
+              <div class="p-3 p-lg-5 border">
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="c_fname" class="text-black">Choose Category </label>
+                   <asp:DropDownList ID="D1" runat="server" AutoPostBack="true" CssClass="form-control" >
                 
-               
-                
-                  
+                <asp:ListItem>Batsman</asp:ListItem>
+                <asp:ListItem>Bowler</asp:ListItem>
+                <asp:ListItem>Wk/Bat</asp:ListItem>
+                <asp:ListItem>All Rounder</asp:ListItem>
+            </asp:DropDownList>
+                  </div>                  
+                </div>
 
-                
-                
-           
+                   <div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="c_fname" class="text-black">Choose Team </label>
+                      <asp:DropDownList runat="server" AutoPostBack="True" CssClass="form-control" ID="Dt" DataSourceID="SqlDataSource2" DataTextField="tname" DataValueField="tname"></asp:DropDownList>
+               </div>
+                   </div>
+
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="c_email" class="text-black">Choose Player </label>
+                       <asp:DropDownList ID="D2" runat="server" AutoPostBack="true" DataSourceID="SqlDataSource1" DataTextField="name" DataValueField="name" CssClass="form-control" >
+            </asp:DropDownList>
+                   </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="c_email" class="text-black">Points </label>
+                      <asp:TextBox ID="T1" runat="server" CssClass="form-control"></asp:TextBox>
+                   </div>
+                </div>         
+                               
+                                 
+                <div class="form-group row">
+                  <div class="col-lg-12">
+                      <asp:Button ID="Button1" runat="server" Text="Update Points" class="btn btn-primary btn-lg btn-block" onclick="Button1_Click"  />
+                   
+                  </div>
+                </div>
+              </div>
             </form>
           </div>
             
           </div>
-         
+         <div><asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=dream11;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT DISTINCT * FROM [players] WHERE (([category] = @category) AND ([team] = @team))">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="D1" Name="category" PropertyName="SelectedValue" Type="String" />
+                <asp:ControlParameter ControlID="Dt" Name="team" PropertyName="SelectedValue" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=dream11;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT DISTINCT * FROM [team]"></asp:SqlDataSource>
+         </div>
         </div>
       </div>
     </div>
@@ -131,7 +170,7 @@
           <div class="col-lg-4">
             <div class="mb-5">
               <h3 class="footer-heading mb-4">About Sportz</h3>
-              <p>We are the websote that will help you to play along with the players you love and this is where the real game starts. You will have a great faceoff with other teams who just like you will have their own team to compete and this will be to get to the top and the best one will WIN.</p>
+              <p>We are the website that will help you to play along with the players you love and this is where the real game starts. You will have a great faceoff with other teams who just like you will have their own team to compete and this will be to get to the top and the best one will WIN.</p>
             </div>
 
             
@@ -144,7 +183,7 @@
               </div>
               <div class="col-md-6 col-lg-6">
                 <ul class="list-unstyled">
-                 <li><a href="index.aspx">Home</a></li>
+                  <li><a href="index.aspx">Home</a></li>
                   <li><a href="points.aspx">Points</a></li>
                   <li><a href="players.aspx">Players</a></li>
                   <li><a href="fixtures.aspx">Matches</a></li>
@@ -204,9 +243,9 @@
         
           
         </div>
-     
+      </div>
     </footer>
-  
+  </div>
 
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -222,4 +261,4 @@
   <script src="js/main.js"></script>
     
   </body>
-</html>
+</html>   

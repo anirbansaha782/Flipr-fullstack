@@ -1,5 +1,24 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="_Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="teams.aspx.cs" Inherits="ADMIN_Default" MaintainScrollPositionOnPostback="true"%>
 
+     <script type="text/javascript" src="../jquery.js"></script>
+
+<script>
+    //$(function () {
+       
+    //   console.log("Errors");
+    //    $("#Button1").click(function () {
+    //         var x = $("#TextBox1").val();
+    //    if (x =="")
+    //    {
+    //        alert("Enter the team name ");
+    //    }
+    //    else {
+    //        alert("Saved Sucessfully");
+    //    }
+    //    });
+    });
+
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +77,7 @@
       </div>
       <nav class="site-navigation position-relative text-right bg-black text-md-right" role="navigation">
         <div class="container position-relative">
-           <div class="site-logo">
+         <div class="site-logo">
             <a href="index.aspx"><img src="images/logo.png" alt=""></a>
           </div>
 
@@ -78,7 +97,7 @@
             <li><a href="teams.aspx">Teams</a></li>
             <li><a href="fixtures.aspx">Matches</a></li>
             <li><a href="vdate.aspx">Venues </a></li>       
-            <a href="../index.aspx"> <button class="btn btn-primary" type="submit" id="b2">Logout</button></a>
+             <a href="../index.aspx"> <button class="btn btn-primary" type="submit" id="b2">Logout</button></a>
           </ul>
         </div>
       </nav>
@@ -88,9 +107,8 @@
       <div class="container">
         <div class="row align-items-center justify-content-start">
           <div class="col-md-6 text-center text-md-left" data-aos="fade-up" data-aos-delay="400">
-            <h1 class="bg-text-line">ADMIN CONTROLLER....</h1>
-            <p class="mt-4">#Assigning the value to the players<br/><br />#Creating the players,venues,teams,matches<br /><br />
-                #Updating points of players<br /> </p>
+            <h1 class="bg-text-line">Teams</h1>
+            <p class="mt-4">Enter the teams in the game.</p>
           </div>
         </div>
       </div>
@@ -101,18 +119,60 @@
       <div class="container">
         <div class="row align-items-first">
           <div class="col-md-7">
-          	<h1 align="align-items-center" class="bg-white" align="text-center" ></h1>
-            <form action="#" method="post" class="bg-white" align="text-center">
+          	<h1 align="align-items-center" class="bg-white" align="text-center">Teams</h1>
+            <form action="" method="post" class="bg-white" align="text-center" runat="server">
               
-              
-                
-               
+              <div class="p-3 p-lg-5 border">
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="c_fname" class="text-black">Team Name <span class="text-danger">*</span></label>
+                      <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control"></asp:TextBox>
+                  </div>
+                  
+                </div>
                 
                   
 
                 
-                
-           
+                <div class="form-group row">
+                  <div class="col-lg-12">
+                    <asp:Button ID="Button1" runat="server" Text="Save" CssClass="btn btn-primary btn-lg btn-block" OnClick="Button1_Click" />
+                  </div>
+                </div>
+
+                   <div>
+               <div></div>
+                       <asp:GridView ID="GridView1" runat="server"  AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSource1" Width="540px" >
+                           <Columns>
+                               <asp:BoundField DataField="tname" HeaderText="Team Name" SortExpression="tname" />
+                               <asp:TemplateField ShowHeader="False">
+                                   <EditItemTemplate>
+                                       <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="True" CommandName="Update" Text="Update"></asp:LinkButton>
+                                       &nbsp;<asp:LinkButton ID="LinkButton3" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel"></asp:LinkButton>
+                                   </EditItemTemplate>
+                                   <ItemTemplate>
+                                       <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Edit" Text="Edit"></asp:LinkButton>
+                                   </ItemTemplate>
+                               </asp:TemplateField>
+                               <asp:TemplateField ShowHeader="False">
+                                   <ItemTemplate>
+                                       <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete"></asp:LinkButton>
+                                   </ItemTemplate>
+                               </asp:TemplateField>
+                           </Columns>
+                       </asp:GridView>
+                   </div>
+                  <div>
+                      <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=dream11;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="disteam" UpdateCommand="updteam" DeleteCommand="delteam" DeleteCommandType="StoredProcedure" SelectCommandType="StoredProcedure" UpdateCommandType="StoredProcedure">
+                          <DeleteParameters>
+                              <asp:Parameter Name="id" Type="Int32" />
+                          </DeleteParameters>
+                          <UpdateParameters>
+                              <asp:Parameter Name="id" Type="Int32" />
+                              <asp:Parameter Name="tname" Type="String" />
+                          </UpdateParameters>
+                      </asp:SqlDataSource>
+                  </div>
             </form>
           </div>
             
@@ -123,8 +183,6 @@
     </div>
 
    
-
-    
     <footer class="site-footer border-top">
       <div class="container">
         <div class="row">
@@ -144,7 +202,7 @@
               </div>
               <div class="col-md-6 col-lg-6">
                 <ul class="list-unstyled">
-                 <li><a href="index.aspx">Home</a></li>
+                  <li><a href="index.aspx">Admin Home</a></li>
                   <li><a href="points.aspx">Points</a></li>
                   <li><a href="players.aspx">Players</a></li>
                   <li><a href="fixtures.aspx">Matches</a></li>
@@ -204,7 +262,7 @@
         
           
         </div>
-     
+    
     </footer>
   
 
